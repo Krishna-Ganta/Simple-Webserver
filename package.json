@@ -1,0 +1,30 @@
+{
+  "name": "test-repo",
+  "version": "1.0.0",
+  "description": "NodeJS Server Entity",
+  "main": "server.js",
+  "scripts": {
+    "test": "node server.js",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Krishna-Ganta/Test-Repo.git"
+  },
+  "keywords": [
+    "NodeJS",
+    "LevelDB",
+    "level",
+    "Server"
+  ],
+  "author": "Krishna Chaitanya Ganta",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Krishna-Ganta/Test-Repo/issues"
+  },
+  "homepage": "https://github.com/Krishna-Ganta/Test-Repo#readme",
+  "dependencies": {
+    "express": "^4.18.2",
+    "leveldown": "^6.1.1"
+  }
+}
