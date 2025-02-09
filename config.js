@@ -1,6 +1,6 @@
 const config = {
-    db_path: "./db/",
-    web_api_port: 8000
+    db_path: "db",
+    port: 8000
 }
 
 module.exports = config;
