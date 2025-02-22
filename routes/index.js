@@ -2,34 +2,19 @@ module.exports = (function() {
     const router = require('express').Router();
     const db = require('../db.js');
     
-    router.get('/all', (req, res) => {
-        let data = {};
-        const iterator = db.iterator({ keyAsBuffer: false, valueAsBuffer: false });
+    router.get('/all', async (req, res) => {
+        key = req.params.key;
 
-        const next = () => {
-            iterator.next((err, key, value) => {
-                if (err) {
-                    return res.status(500).json({ error: 'Iterator error', details: err.message });
-                }
-    
-                if (!key) {
-                    return iterator.end(() => res.json(data));
-                }
-    
-                if (key !== 'auto_increment_id') {
-                    data.push({ key, value });
-                }
-    
-                next();
-            });
-        };
-    
-        next();
-        res.send(data);
+        const results = await db.iterate(seek = key);
+
+        res.send(results);
     });
 
     router.post('/store', (req, res) => {
-        console.log(req.body)
+        let input = req.body;
+        for (let key in input) {
+            db.put(key, input[key])
+        }
 
         res.end("Stored value");
     });

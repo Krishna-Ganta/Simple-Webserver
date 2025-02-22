@@ -4,6 +4,7 @@ const db = require('./db.js');
 const router = require('./routes/');
 const app = express();
 
+app.use(express.json())
 app.use('/api', router)
 
 let port = process.env.PORT || config.port;

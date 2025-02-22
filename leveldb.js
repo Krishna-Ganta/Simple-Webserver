@@ -61,6 +61,40 @@ class leveldb {
         });
     }
 
+    async iterate({ gte = undefined, lte = undefined, limit = -1, seek = undefined } = {}) {
+        return new Promise((resolve, reject) => {
+            const iterator = this.db.iterator({ gte, lte, limit });
+
+            let results = [];
+
+            if (seek) {
+                iterator.seek(seekKey);
+            }
+
+            const next = () => {
+                iterator.next((err, key, value) => {
+                    if (err) {
+                        iterator.end(() => reject(err));
+                        return;
+                    }
+                    if (key === undefined) {
+                        iterator.end(() => resolve(results));
+                        return;
+                    }
+                    results.push({ key: key.toString(), value: value.toString() });
+
+                    if (limit > 0 && results.length >= limit) {
+                        iterator.end(() => resolve(results));
+                    } else {
+                        next();
+                    }
+                });
+            };
+
+            next();
+        });
+    }
+
     close() {
         return new Promise((resolve, reject) => {
             this.db.close((err) => {
